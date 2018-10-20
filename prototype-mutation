@@ -1,0 +1,36 @@
+var obj1 = {};
+console.log(Object.getPrototypeOf(obj1) === Object.prototype); //true
+console.log(obj1.hasOwnProperty('__proto__')); //false
+
+var obj2 = {__proto__: null};
+console.log(Object.getPrototypeOf(obj2) === null); //true
+
+var protoObj = {};
+var obj3 = {'__proto__': protoObj};
+console.log(Object.getPrototypeOf(obj3) === protoObj); //true
+console.log(obj3.hasOwnProperty('__proto__')); //false
+
+var obj4 = {__proto__: 'not an object or null'};
+// did not change so it is the same as Object.prototype
+console.log(Object.getPrototypeOf(obj4) === Object.prototype); // true 
+console.log(obj4.hasOwnProperty('__proto__')); //false
+
+
+
+Property definitions that do not use "colon" notation are not prototype mutations: 
+they are property definitions that behave identically to similar definitions using any other name.
+
+
+var __proto__ = 'variable';
+
+var objx1 = {__proto__};
+// no prototype mutation happened
+console.log(Object.getPrototypeOf(objx1) === Object.prototype); // true
+console.log(objx1.hasOwnProperty('__proto__')); // true
+console.log(objx1.__proto__ === 'variable'); // true
+
+var objx2 = {__proto__() { return 'hello'; }};
+console.log(objx2.__proto__() === 'hello'); // true
+
+var objx3 = {['__prot' + 'o__']: 17};
+console.log(objx3.__proto__ === 17); // true
